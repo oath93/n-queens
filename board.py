@@ -1,5 +1,18 @@
 from random import randrange
 
+def spaces_to_align(num):
+    spaces = 0
+    while num >= 10 ** spaces:
+        spaces += 1
+    if spaces == 0:
+        spaces += 1
+    return spaces - 1
+def right_pad_string(to_pad, spaces):
+    to_return = to_pad
+    for i in range(spaces + 1):
+        to_return = to_return + " "
+    return to_return
+
 class Board(object):
     def __init__(self, size):
         self.size = size
@@ -13,11 +26,15 @@ class Board(object):
     #work on output for double-digit boards
     def print_board(self):
         output = "  "
+        spaces_in_size = spaces_to_align(self.size)
         for i in range(self.size):
-            output = output + str(i + 1) + " "
+            spaces_in_number = spaces_to_align(i + 1)
+            to_add = right_pad_string(str(i + 1), spaces_in_size - spaces_in_number)
+            output = output + to_add
         print(output)
         for i in range(self.size):
-            output = str(i + 1) + " "
+            spaces_in_number = spaces_to_align(i + 1)
+            output = right_pad_string(str(i + 1), spaces_in_size - spaces_in_number)
             for j in range(self.size):
                 output = output + self.board[j][i] + " "
             print(output)
@@ -53,5 +70,7 @@ def test_board(min, max, steps = 1):
         board.place_piece(i-1,i-1,"Q")
         board.print_board()
 
-
 test_board(10,11, 1)
+for i in range(0,250,5):
+    print(i, end=" ")
+    print(spaces_to_align(i))
