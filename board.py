@@ -23,10 +23,15 @@ class Board(object):
             for j in range(size):
                 self.board[i].append('x')
 
-    #work on output for double-digit boards
     def print_board(self):
-        output = "  "
         spaces_in_size = spaces_to_align(self.size)
+        padding = ""
+        new_lines = ""
+        for i in range(spaces_in_size + 1):
+            padding = padding + " "
+        for i in range(int(spaces_in_size / 2)):
+            new_lines = new_lines + "\n"
+        output = padding + " "
         for i in range(self.size):
             spaces_in_number = spaces_to_align(i + 1)
             to_add = right_pad_string(str(i + 1), spaces_in_size - spaces_in_number)
@@ -36,8 +41,8 @@ class Board(object):
             spaces_in_number = spaces_to_align(i + 1)
             output = right_pad_string(str(i + 1), spaces_in_size - spaces_in_number)
             for j in range(self.size):
-                output = output + self.board[j][i] + " "
-            print(output)
+                output = output + self.board[j][i] + padding
+            print(output + new_lines)
 
     def place_piece(self, x, y, piece):
         if x < self.size and y < self.size:
@@ -70,7 +75,9 @@ def test_board(min, max, steps = 1):
         board.place_piece(i-1,i-1,"Q")
         board.print_board()
 
-test_board(10,11, 1)
+test_board(15,16, 1)
+"""
 for i in range(0,250,5):
     print(i, end=" ")
     print(spaces_to_align(i))
+"""
