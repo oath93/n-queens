@@ -1,4 +1,5 @@
 from random import randrange
+from time import time
 
 def spaces_to_align(num):
     spaces = 0
@@ -7,6 +8,7 @@ def spaces_to_align(num):
     if spaces == 0:
         spaces += 1
     return spaces - 1
+
 def right_pad_string(to_pad, spaces):
     to_return = to_pad
     for i in range(spaces + 1):
@@ -55,25 +57,22 @@ def test_board(min, max, steps = 1):
     for i in range(min,max, steps):
         print("Test of n=" + str(i))
         board = Board(i)
-        board.print_board()
-        pieces_to_place = randrange(0,i)
+        pieces_to_place = randrange(0,(i*i))
         print("testing piece placing. placing " + str(pieces_to_place) + " test pieces.")
         for j in range(pieces_to_place):
             x = randrange(0,i)
             y = randrange(0,i)
             board.place_piece(x,y, "Q")
             print("placing piece #" + str(j + 1) +" (" + str(x + 1) + ", " + str(y + 1) + ")")
-            board.print_board()
-        print("Placing out-of-bounds piece:")
-        print("Board before attempted place...")
-        board.print_board()
+        print("Placing out-of-bounds pieces:")
         board.place_piece(i-1,i,"Q")
-        print("Board after attempted place...")
-        board.print_board()
         board.place_piece(i,i-1,"Q")
         print("Attempting placement at edge.")
         board.place_piece(i-1,i-1,"Q")
+        print("Final Board:")
         board.print_board()
+
+start = time()
 
 test_board(15,16, 1)
 """
@@ -81,3 +80,7 @@ for i in range(0,250,5):
     print(i, end=" ")
     print(spaces_to_align(i))
 """
+
+
+end = time()
+print("Time to complete tests: " + str(end - start) + " seconds.")
